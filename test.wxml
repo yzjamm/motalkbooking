@@ -1,0 +1,40 @@
+<!--test.wxml-->
+<view class="container">
+  <view class="profile-info" bindtap="goLogin">
+    <image class="avatar" src="{{userInfo.avatar}}"></image>
+    <view class="info">
+      <text class="name">{{userInfo.nickname}}</text>
+      <!-- <text class="level">{{userInfo.username}}</text> -->
+    </view>
+  </view>
+  <view class="btn-area">
+    <view class="body-view">
+      <text>{{text}}</text>
+    </view>
+  </view>
+  <form bindsubmit="formSubmit" report-submit="true">
+    <input name="input" class="input" placeholder="please input here" />
+    <button formType="submit">Submit</button>
+    <button formType="reset">Reset</button>
+  </form>
+</view>
+<wxc-steps steps="{{steps}}" current="{{current}}"></wxc-steps>
+
+  <wxc-label class="label" type="fill" type-color="#747bb1">组班中...</wxc-label>
+  <wxc-label class="label" type="fill" type-color="#ffe8ee" text-color="#ff5577">已有 1 人参与组班</wxc-label>
+    <view class="demo-text">
+        <view>倒计时还剩{{computeTime}}秒</view>
+        <view wx:if="{{isEnd}}" class="demo-text--end">倒计时结束啦, 请再次组班, 邀请学伴</view>
+    </view>
+    <button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="countAgain">{{isEnd ? '组班' : '等待组班成功...'}}</button>
+<wxc-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>   
+<button open-type="share">邀请学伴</button>
+<button type="Primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="exitLogin"> Exit </button>
+<button open-type="contact">组班联系客服</button>
+
+<view>
+  <image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>
+  <image src="/static/images/cs.png" class="img-style" animation="{{animCollect}}" bindtap="collect"></image> 
+  <image src="/static/images/ic_menu_me_pressed.png" class="img-style" animation="{{animTranspond}}" bindtap="transpond"></image>  
+  <image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>   
+</view>  
