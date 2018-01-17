@@ -69,3 +69,6 @@
   font-size: 20rpx;
   text-align: center;  
 }
+.img-style button{
+  opacity: 0;
+}
