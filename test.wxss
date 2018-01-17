@@ -59,6 +59,15 @@
   z-index: 100;
   text-align: center;
 }
+
+.img-plus-style-text{    
+  position: fixed;  
+  bottom: 230rpx;  
+  right: 50rpx;  
+  z-index: 100;
+  text-align: center;
+  font-size: 20rpx;
+}
 .img-style {  
   height: 80rpx;  
   width: 80rpx;  
@@ -70,5 +79,14 @@
   text-align: center;  
 }
 .img-style button{
+  opacity: 0;
+}
+.img-style-text{    
+  position: fixed;  
+  bottom: 225rpx;  
+  right: 40rpx;  
+  z-index: 100;
+  text-align: center;
+  font-size: 20rpx;
   opacity: 0;
 }
