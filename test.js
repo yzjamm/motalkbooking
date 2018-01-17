@@ -26,13 +26,13 @@ Page({
       title: '步骤2: 小程序首页浏览课程和放出的课程时段',
       desc: '选课'
     }, {
-        title: '步骤3: 选择2/3/4人班',
+      title: '步骤3: 选择2/3/4人班',
       desc: '组班'
     }, {
-        title: '步骤4: 分享组班页面邀请学伴',
+      title: '步骤4: 分享组班页面邀请学伴',
       desc: '邀请学伴'
     }, {
-        title: '步骤5: 组班成功，进入付款环节',
+      title: '步骤5: 组班成功，进入付款环节',
       desc: '付款'
     }],
     current: 2,
@@ -58,14 +58,14 @@ Page({
       userInfo: app.globalData.userInfo,
     });
     console.log('test' + app.globalData.token);
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -89,28 +89,28 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -122,10 +122,10 @@ Page({
       title: '邀请学伴', // 分享标题  
       desc: '我们正在组班：人物传记，确 1 个学生', // 分享描述  
       path: '/test' // 分享路径  
-    }  
+    }
   },
 
-//实现绑定的formSubmit 将formId传给服务器
+  //实现绑定的formSubmit 将formId传给服务器
   formSubmit: function (e) {
     var that = this
     wx.request({
@@ -209,7 +209,7 @@ Page({
   },
   //点击弹出  
   plus: function () {
-   if (!this.data.isPopping) {
+    if (!this.data.isPopping) {
       //弹出动画  
       this.takeback();
       this.setData({
@@ -244,7 +244,15 @@ Page({
       duration: 500,
       timingFunction: 'ease-out'
     })
+    var animationcollectbtn = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
     var animationTranspond = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationTranspondbtn = wx.createAnimation({
       duration: 500,
       timingFunction: 'ease-out'
     })
@@ -254,12 +262,16 @@ Page({
     })
     animationPlus.rotateZ(180).step();
     animationcollect.translate(-50, -50).rotateZ(360).opacity(1).step();
+    animationcollectbtn.translate(-50, -50).rotateZ(360).opacity(0).step();
     animationTranspond.translate(-70, 0).rotateZ(360).opacity(1).step();
+    animationTranspondbtn.translate(-70, 0).rotateZ(360).opacity(0).step();
     animationInput.translate(-50, 50).rotateZ(360).opacity(1).step();
     this.setData({
       animPlus: animationPlus.export(),
       animCollect: animationcollect.export(),
+      animCollectBtn: animationcollectbtn.export(),
       animTranspond: animationTranspond.export(),
+      animTranspondBtn: animationTranspondbtn.export(),
       animInput: animationInput.export(),
     })
   },
@@ -274,7 +286,15 @@ Page({
       duration: 500,
       timingFunction: 'ease-out'
     })
+    var animationcollectbtn = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
     var animationTranspond = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationTranspondbtn = wx.createAnimation({
       duration: 500,
       timingFunction: 'ease-out'
     })
@@ -284,12 +304,16 @@ Page({
     })
     animationPlus.rotateZ(0).step();
     animationcollect.translate(0, 0).rotateZ(0).opacity(0).step();
+    animationcollectbtn.translate(0, 0).rotateZ(0).opacity(0).step();
     animationTranspond.translate(0, 0).rotateZ(0).opacity(0).step();
+    animationTranspondbtn.translate(0, 0).rotateZ(0).opacity(0).step();
     animationInput.translate(0, 0).rotateZ(0).opacity(0).step();
     this.setData({
       animPlus: animationPlus.export(),
       animCollect: animationcollect.export(),
+      animCollectBtn: animationcollectbtn.export(),
       animTranspond: animationTranspond.export(),
+      animTranspondBtn: animationTranspondbtn.export(),
       animInput: animationInput.export(),
     })
   }

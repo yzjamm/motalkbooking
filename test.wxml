@@ -33,8 +33,11 @@
 <button open-type="contact">组班联系客服</button>
 
 <view>
-  <image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>
-  <image src="/static/images/cs.png" class="img-style" animation="{{animCollect}}" bindtap="collect"></image> 
-  <image src="/static/images/ic_menu_me_pressed.png" class="img-style" animation="{{animTranspond}}" bindtap="transpond"></image>  
-  <image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>   
-</view>  
+         
+<image src="/static/images/cs.png" class="img-style" animation="{{animCollect}}"></image>
+<button open-type="share" class="img-style button" animation="{{animCollectBtn}}"></button>   
+  <image src="/static/images/ic_menu_me_pressed.png" class="img-style" animation="{{animTranspond}}" bindtap="transpond"></image>
+<button open-type="contact" class="img-style button" animation="{{animTranspondBtn}}"></button>  
+  <image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>
+  <image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>   
+</view> 
