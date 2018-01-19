@@ -41,6 +41,9 @@ Page({
     animCollect: {},//item位移,透明度  
     animTranspond: {},//item位移,透明度  
     animInput: {},//item位移,透明度 
+
+    groupings: [{ groupingid: '001', weekday: '周三', starthour: '19:10', teachername: 'J老师', coursename: '历史的故事', classmates: '4', price: '115' }, { groupingid: '002', weekday: '周三', starthour: '19:10', teachername: 'J老师', coursename: '国家地理RE', classmates: '4', price: '150' }, { groupingid: '003', weekday: '周日', starthour: '18:00', teachername: 'E老师', coursename: 'G4加州科学', classmates: '4', price: '120' }, { groupingid: '004', weekday: '周五', starthour: '19:10', teachername: 'M老师', coursename: 'G3写作', classmates: '4', price: '175' }],
+    id: 0,             //进入页面时，默认选择第0个，如果不需要默认选中，注释掉就可以了  
   },
 
   /**
@@ -315,6 +318,12 @@ Page({
       animTranspond: animationTranspond.export(),
       animTranspondBtn: animationTranspondbtn.export(),
       animInput: animationInput.export(),
+    })
+  },
+  choseTxtColor: function (e) {
+    var id = e.currentTarget.dataset.id;  //获取自定义的ID值  
+    this.setData({
+      id: id
     })
   }
 })

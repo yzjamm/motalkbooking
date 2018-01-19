@@ -124,3 +124,4 @@
     </view>
   </view>
 </view>
+  <image src="/static/images/notification.gif" class="img-notification animated infinite pulse"></image> 
