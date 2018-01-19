@@ -1,4 +1,6 @@
 /**app.wxss**/
+@import "/lib/style/animate.wxss";
+
 .container {
   box-sizing: border-box;
   background-color: #f4f4f4;

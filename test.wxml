@@ -1,4 +1,10 @@
 <!--test.wxml-->
+<view class="chose-txt" wx:for="{{groupings}}" wx:key="{{groupings}}" bindtap="choseTxtColor" style="{{index == id?'background:url(/static/images/checked.png) right no-repeat; border:1rpx solid #e8580c; color: #e8580c':'baciground:url();border:1rpx solid gainsboro;color:gray'}}">  
+                 <text class="chose-p" >{{item.weekday}}{{item.starthour}}, {{item.teachername}}, {{item.coursename}}, {{item.classmates}}人班</text>  
+                 <text class="chose-p" >{{item.price}}元</text>  
+
+            </view>
+
 <view class="container">
   <view class="profile-info" bindtap="goLogin">
     <image class="avatar" src="{{userInfo.avatar}}"></image>
@@ -12,12 +18,14 @@
       <text>{{text}}</text>
     </view>
   </view>
-  <form bindsubmit="formSubmit" report-submit="true">
+
+  <form bindsubmit="formSubmit" report-submit="true"> 
     <input name="input" class="input" placeholder="please input here" />
     <button formType="submit">Submit</button>
     <button formType="reset">Reset</button>
   </form>
 </view>
+
 <wxc-steps steps="{{steps}}" current="{{current}}"></wxc-steps>
 
   <wxc-label class="label" type="fill" type-color="#747bb1">组班中...</wxc-label>
@@ -44,5 +52,5 @@
 <button open-type="contact" class="img-style button" animation="{{animTranspondBtn}}"></button>  
   <image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>
   <image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image> 
-  <text class="img-plus-style-text">点我</text>
+  <text class="img-plus-style-text animated infinite bounce">点我</text>
 </view> 
