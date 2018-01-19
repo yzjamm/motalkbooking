@@ -1,0 +1,57 @@
+<view class="container">
+  <view class="profile-info" bindtap="goLogin">
+    <image class="avatar" src="{{userInfo.avatar}}"></image>
+    <view class="info">
+      <text class="name">{{userInfo.nickname}}</text>
+      <!-- <text class="level">{{userInfo.username}}</text> -->
+    </view>
+  </view>
+  <view class="btn-area">
+    <view class="body-view">
+      <text>{{text}}</text>
+    </view>
+  </view>
+</view>
+<wxc-steps steps="{{steps}}" current="{{current}}"></wxc-steps>
+
+<view class="container">
+    <view class="groupings">
+        <navigator url="" class="grouping" wx:for="{{groupings}}" wx:key="{{groupings}}">
+            <view class="h">
+                <view class="l">组班编号：111</view>
+  <wxc-label class="label" type="fill" type-color="#747bb1">组班中...</wxc-label>
+  <wxc-label class="label" type="fill" type-color="#ffe8ee" text-color="#ff5577">已有 1 人参与组班</wxc-label>
+            </view>
+            <view class="goods">
+                <view class="img">
+                    <image src=""></image>
+                </view>
+                <view class="info">
+                    <text class="name">{{item.weekday}}{{item.starthour}}, {{item.teachername}}, {{item.coursename}}, {{item.classmates}}人班</text>
+                    <text class="number">{{item.price}}元</text>
+                </view>
+                <view class="status"></view>
+            </view>
+            <view class="b">
+<button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="countAgain">{{isEnd ? '参与组班' : '等待组班成功...'}}</button>
+            </view>
+            <wxc-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>            
+        </navigator>
+    </view>
+</view>
+
+<button open-type="share">邀请学伴</button>
+<button open-type="contact">组班联系客服</button>
+<button type="Primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="exitLogin"> 退出登录MoTalk </button>
+
+<view>         
+<image src="/static/images/cs.png" class="img-style" animation="{{animCollect}}"></image>
+<text class="img-style-text" animation="{{animCollect}}">找学伴</text>
+<button open-type="share" class="img-style button" animation="{{animCollectBtn}}"></button> 
+<image src="/static/images/ic_menu_me_pressed.png" class="img-style" animation="{{animTranspond}}" bindtap="transpond"></image>
+<text class="img-style-text" animation="{{animTranspond}}">找客服</text>
+<button open-type="contact" class="img-style button" animation="{{animTranspondBtn}}"></button>  
+<image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>
+<image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image> 
+<text class="img-plus-style-text animated infinite bounce">点我</text>
+</view> 
