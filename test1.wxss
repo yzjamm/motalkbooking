@@ -45,6 +45,17 @@ page{
     font-size: 30rpx;
 }
 
+.demo-text {
+        display: flex;
+    }
+.demo-text--end {
+   padding-left: 20rpx;
+   color: #f5456e
+    }
+  .label {
+    margin-right: 20rpx;
+  }
+
 .img-plus-style {  
   height: 120rpx;  
   width: 120rpx;  

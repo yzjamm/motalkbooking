@@ -64,7 +64,7 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo,
     });
-    console.log('test' + app.globalData.token);
+    console.log('test1 onload token is ...' + app.globalData.token);
    this.getGroupingList();
   
   },
@@ -90,6 +90,7 @@ joinGrouping: function (event) {
     let currentgrouping = this.data.groupings[itemIndex];
     let joined = currentgrouping.joined + 1;
     let current = this.data.current;
+    let token = wx.getStorageSync('token');
     console.log('index is '+index);
     console.log('itemindex is '+itemIndex);
   wx.showModal({
@@ -103,7 +104,7 @@ joinGrouping: function (event) {
     success: function (res) {
         if (res.confirm) {
     util.request(api.JoinGrouping, {
-      groupingId: that.data.groupings[itemIndex].groupingid, joined: that.data.groupings[itemIndex].joined
+      groupingId: that.data.groupings[itemIndex].groupingid, joined: that.data.groupings[itemIndex].joined, startime: new Date()
     },'POST').then(function (res) {
       if (res.errno === 0) {
         console.log(res.data);
@@ -126,7 +127,7 @@ joinGrouping: function (event) {
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function () {  
   },
 
   /**
@@ -143,7 +144,7 @@ joinGrouping: function (event) {
     this.setData({
       userInfo: app.globalData.userInfo,
     });
-    console.log('test' + app.globalData.token);
+    console.log('test1 onshow is ...' + app.globalData.token);
   },
 
   /**
@@ -190,6 +191,7 @@ joinGrouping: function (event) {
       this.setData({
         userInfo: res.data.userInfo
       });
+      console.log('userInfo is here......' + userInfo);
       app.globalData.userInfo = res.data.userInfo;
       app.globalData.token = res.data.token;
     }).catch((err) => {
@@ -206,7 +208,7 @@ joinGrouping: function (event) {
           wx.removeStorageSync('token');
           wx.removeStorageSync('userInfo');
           app.globalData.userInfo = {
-            nickname: 'Hi,MoTalk学员',
+            nickname: 'Hi,MoTalk学员,点此头像登录',
             username: '点击去登录',
             avatar: 'https://www.hellomotalk.com/jack/static/icons8-graduate-80.png'
           };

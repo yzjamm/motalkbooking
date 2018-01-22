@@ -35,7 +35,11 @@
             <view class="b">
 <button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="joinGrouping" data-item-index="{{index}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}">{{isEnd ? '参与组班' : '等待组班成功...'}}</button>
             </view>
-            <wxc-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>            
+            <wxc-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>   
+    <view class="demo-text">
+        <view>倒计时还剩{{computeTime}}秒</view>
+        <view wx:if="{{isEnd}}" class="demo-text--end">倒计时结束啦, 请再次组班, 邀请学伴</view>
+    </view>         
         </view>
     </view>
 </view>
