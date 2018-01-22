@@ -59,7 +59,7 @@ module.exports = {
     FootprintList: NewApiRootUrl + 'footprint/list',  //足迹列表
     FootprintDelete: NewApiRootUrl + 'footprint/delete',  //删除足迹
 
-    GroupingList: NewApiRootUrl + 'groupings/index',
+    GroupingList: NewApiRootUrl + 'groupings/list',
     JoinGrouping: NewApiRootUrl + 'groupings/join',
     QuitGrouping: NewApiRootUrl + 'groupings/quit',
 };

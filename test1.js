@@ -116,6 +116,7 @@ joinGrouping: function (event) {
     complete: function (res) {
     currentgrouping.joined = joined;
     that.setData({
+      userInfo: app.globalData.userInfo,
       current: current + 1,
       groupings: that.data.groupings
     });
