@@ -16,15 +16,15 @@
 
 <view class="container">
     <view class="groupings">
-        <navigator url="" class="grouping" wx:for="{{groupings}}" wx:key="{{groupings}}">
+        <view class="grouping" wx:for="{{groupings}}" wx:key="{{groupings}}">
             <view class="h">
-                <view class="l">组班编号：111</view>
-  <wxc-label class="label" type="fill" type-color="#747bb1">组班中...</wxc-label>
-  <wxc-label class="label" type="fill" type-color="#ffe8ee" text-color="#ff5577">已有 1 人参与组班</wxc-label>
+                <view class="l">组班编号：{{item.groupingid}}</view>
+  <wxc-label class="label r" type="fill" type-color="#ffe8ee" text-color="#ff5577">已有 {{item.joined}} 人参与组班</wxc-label>
+  <wxc-label class="label r" type="fill" type-color="#747bb1">{{item.status ? '组班成功' : '组班中...'}}</wxc-label>
             </view>
             <view class="goods">
                 <view class="img">
-                    <image src=""></image>
+                    <image src="https://www.hellomotalk.com/christy.jpg"></image>
                 </view>
                 <view class="info">
                     <text class="name">{{item.weekday}}{{item.starthour}}, {{item.teachername}}, {{item.coursename}}, {{item.classmates}}人班</text>
@@ -33,10 +33,10 @@
                 <view class="status"></view>
             </view>
             <view class="b">
-<button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="countAgain">{{isEnd ? '参与组班' : '等待组班成功...'}}</button>
+<button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="joinGrouping" data-item-index="{{index}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}">{{isEnd ? '参与组班' : '等待组班成功...'}}</button>
             </view>
             <wxc-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>            
-        </navigator>
+        </view>
     </view>
 </view>
 
@@ -53,5 +53,5 @@
 <button open-type="contact" class="img-style button" animation="{{animTranspondBtn}}"></button>  
 <image src="/static/images/icon_collect_checked.png" class="img-style" animation="{{animInput}}" bindtap="input"></image>
 <image src="/static/images/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image> 
-<text class="img-plus-style-text animated infinite bounce">点我</text>
+<text class="img-plus-style-text animated infinite wobble">点我</text>
 </view> 

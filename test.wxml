@@ -18,7 +18,6 @@
       <text>{{text}}</text>
     </view>
   </view>
-
   <form bindsubmit="formSubmit" report-submit="true"> 
     <input name="input" class="input" placeholder="please input here" />
     <button formType="submit">Submit</button>

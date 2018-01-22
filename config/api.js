@@ -60,4 +60,6 @@ module.exports = {
     FootprintDelete: NewApiRootUrl + 'footprint/delete',  //删除足迹
 
     GroupingList: NewApiRootUrl + 'groupings/index',
+    JoinGrouping: NewApiRootUrl + 'groupings/join',
+    QuitGrouping: NewApiRootUrl + 'groupings/quit',
 };

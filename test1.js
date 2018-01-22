@@ -69,7 +69,7 @@ Page({
   
   },
 
-  getGroupingList(){
+getGroupingList(){
     let that = this;
     util.request(api.GroupingList).then(function (res) {
       if (res.errno === 0) {
@@ -81,11 +81,52 @@ Page({
     });
   },
 
+joinGrouping: function (event) {
+    let that = this;
+    let index = this.data.groupings.map(function (element, index, array) {
+        return index;
+      });
+    let itemIndex = event.target.dataset.itemIndex;
+    let currentgrouping = this.data.groupings[itemIndex];
+    let joined = currentgrouping.joined + 1;
+    let current = this.data.current;
+    console.log('index is '+index);
+    console.log('itemindex is '+itemIndex);
+  wx.showModal({
+    title: '组班确认',
+    content: '24小时后可取消，7天之后组班未成功，自动取消，确认要加入吗？',
+    showCancel: true,
+    cancelText: '取消',
+    cancelColor: '',
+    confirmText: '加入',
+    confirmColor: '',
+    success: function (res) {
+        if (res.confirm) {
+    util.request(api.JoinGrouping, {
+      groupingId: that.data.groupings[itemIndex].groupingid, joined: that.data.groupings[itemIndex].joined
+    },'POST').then(function (res) {
+      if (res.errno === 0) {
+        console.log(res.data);
+      }
+    }); 
+     } 
+   },
+    fail: function (res) { },
+    complete: function (res) {
+    currentgrouping.joined = joined;
+    that.setData({
+      current: current + 1,
+      groupings: that.data.groupings
+    });
+    console.log('current is '+ current);
+      },
+  });  
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
   },
 
   /**

@@ -124,4 +124,5 @@
     </view>
   </view>
 </view>
-  <image src="/static/images/notification.gif" class="img-notification animated infinite pulse"></image> 
+  <image src="/static/images/notification.gif" class="img-notification animated infinite pulse" bindtap="ShowNewNotification"></image> 
+  <text class="img-text animated infinite wobble">最新通知</text>
