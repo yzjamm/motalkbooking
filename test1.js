@@ -32,7 +32,8 @@ Page({
       desc: '付款'
     }],
     current: 2,
-    countdown: 5,
+    now:0,
+    countdown: [],
     computeTime: 5,
     isEnd: false,
     disabled: true,
@@ -65,6 +66,7 @@ Page({
     }
     this.setData({
       userInfo: app.globalData.userInfo,
+      now: parseInt(new Date().getTime() / 1000)
     });
     console.log('test1 onload token is ...' + app.globalData.token);
    this.getGroupingList();
@@ -73,7 +75,6 @@ Page({
 
 getGroupingList(){
     let that = this;
-    let countdown= 5;
     let computeTime= 5;
     let isEnd= false;
     let disabled= true;
@@ -82,7 +83,9 @@ getGroupingList(){
         console.log(res.data);
         that.setData({
           groupings: res.data.groupingList
+
         });
+        
       }
     });
   },
@@ -93,8 +96,6 @@ joinGrouping: function (event) {
         return index;
       });
     let itemIndex = event.target.dataset.itemIndex;
-    let currentgrouping = this.data.groupings[itemIndex];
-    let joined = currentgrouping.joined + 1;
     let userInfo = this.data.userInfo;
     let token = wx.getStorageSync('token');
     let current = this.data.current;
@@ -129,7 +130,7 @@ joinGrouping: function (event) {
       groupingId: that.data.groupings[itemIndex].groupingid
     },'POST').then(function (res) {
       
-    currentgrouping.joined = joined;
+    that.getGroupingList();
     that.setData({
       current: current + 1,
       groupings: that.data.groupings

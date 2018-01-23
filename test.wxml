@@ -1,5 +1,5 @@
 <!--test.wxml-->
-<video src=" http://videorecord.hellomotalk.com/video_records/2018_01_15/cw-g2-4c-u1w1-parta_0_0.mp4"   controls ></video>
+<video src="http://videorecord.hellomotalk.com/video_records/2018_01_15/cw-g2-4c-u1w1-parta_0_0.mp4"   controls ></video>
 <view class="chose-txt" wx:for="{{groupings}}" wx:key="{{groupings}}" bindtap="choseTxtColor" style="{{index == id?'background:url(/static/images/checked.png) right no-repeat; border:1rpx solid #e8580c; color: #e8580c':'baciground:url();border:1rpx solid gainsboro;color:gray'}}">  
                  <text class="chose-p" >{{item.weekday}}{{item.starthour}}, {{item.teachername}}, {{item.coursename}}, {{item.classmates}}人班</text>  
                  <text class="chose-p" >{{item.price}}元</text>  
