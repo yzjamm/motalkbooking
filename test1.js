@@ -13,6 +13,7 @@ Page({
    */
   data: {
     userInfo: {},
+    token: '',
     text: initData,
     steps: [{
       title: '步骤1: 点击上方MoTalk学员头像登录',
@@ -34,6 +35,7 @@ Page({
     countdown: 5,
     computeTime: 5,
     isEnd: false,
+    disabled: true,
     numStyle: 'width: 48rpx; font-size: 28rpx; color: #ffffff; background: #000; text-align: center; border-radius: 8rpx; padding: 5rpx 0;',
     symbolStyle: 'font-size: 28rpx; color: #000; padding: 0 12rpx;',
 
@@ -71,6 +73,10 @@ Page({
 
 getGroupingList(){
     let that = this;
+    let countdown= 5;
+    let computeTime= 5;
+    let isEnd= false;
+    let disabled= true;
     util.request(api.GroupingList).then(function (res) {
       if (res.errno === 0) {
         console.log(res.data);
@@ -89,10 +95,26 @@ joinGrouping: function (event) {
     let itemIndex = event.target.dataset.itemIndex;
     let currentgrouping = this.data.groupings[itemIndex];
     let joined = currentgrouping.joined + 1;
-    let current = this.data.current;
+    let userInfo = this.data.userInfo;
     let token = wx.getStorageSync('token');
+    let current = this.data.current;
+    let countdown= 5;
+    let computeTime= 5;
     console.log('index is '+index);
     console.log('itemindex is '+itemIndex);
+    if (!token){
+    user.loginByWeixin().then(res => {
+      this.setData({
+        userInfo: res.data.userInfo
+      });
+      console.log('userInfo is here......' + userInfo);
+      app.globalData.userInfo = res.data.userInfo;
+      app.globalData.token = res.data.token;
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
   wx.showModal({
     title: '组班确认',
     content: '24小时后可取消，7天之后组班未成功，自动取消，确认要加入吗？',
@@ -104,23 +126,21 @@ joinGrouping: function (event) {
     success: function (res) {
         if (res.confirm) {
     util.request(api.JoinGrouping, {
-      groupingId: that.data.groupings[itemIndex].groupingid, joined: that.data.groupings[itemIndex].joined, startime: new Date()
+      groupingId: that.data.groupings[itemIndex].groupingid
     },'POST').then(function (res) {
-      if (res.errno === 0) {
-        console.log(res.data);
-      }
+      
+    currentgrouping.joined = joined;
+    that.setData({
+      current: current + 1,
+      groupings: that.data.groupings
+    });
+        that.countAgain();
+      
     }); 
      } 
    },
     fail: function (res) { },
     complete: function (res) {
-    currentgrouping.joined = joined;
-    that.setData({
-      userInfo: app.globalData.userInfo,
-      current: current + 1,
-      groupings: that.data.groupings
-    });
-    console.log('current is '+ current);
       },
   });  
   },
@@ -230,7 +250,8 @@ joinGrouping: function (event) {
   },
   onEndCount() {
     this.setData({
-      isEnd: true
+      isEnd: true,
+      disabled: false
     })
   },
   countAgain() {
@@ -238,7 +259,8 @@ joinGrouping: function (event) {
     if (this.data.isEnd) {
       this.setData({
         countdown: countdown,
-        isEnd: false
+        isEnd: false,
+        disabled:true
       })
     }
   },

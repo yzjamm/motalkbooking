@@ -46,7 +46,7 @@
 
 <button open-type="share">邀请学伴</button>
 <button open-type="contact">组班联系客服</button>
-<button type="Primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="exitLogin"> 退出登录MoTalk </button>
+<button type="Primary" bindtap="exitLogin"> 退出登录MoTalk </button>
 
 <view>         
 <image src="/static/images/cs.png" class="img-style" animation="{{animCollect}}"></image>
