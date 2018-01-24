@@ -33,9 +33,9 @@
                 <view class="status"></view>
             </view>
             <view class="b">
-<button size="mini" type="{{isEnd ? 'primary' : 'default'}}" bindtap="joinGrouping" data-item-index="{{index}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}">{{isEnd ? '参与组班' : '等待组班成功...'}}</button>
+<button size="mini" type="{{!item.startime && !item.status ? 'primary' : 'default'}}" bindtap="joinGrouping" data-item-index="{{index}}" loading="{{loading}}" plain="{{plain}}" disabled="{{!item.startime && !item.status ? false : true}}">{{!item.startime && !item.status ? '参与组班' : '等待组班成功...'}}</button>
             </view>
-            <wxc-countdown countdown="{{now - item.startime}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>   
+            <wxc-countdown wx:if="{{!item.startime}}" countdown="{{86400 + item.startime - now}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>   
     <view class="demo-text">
         <view>倒计时还剩{{item.startime}}秒</view>
         <view wx:if="{{isEnd}}" class="demo-text--end">倒计时结束啦, 请再次组班, 邀请学伴</view>
