@@ -35,7 +35,7 @@
             <view class="b">
 <button size="mini" type="{{isEnd[index] ? 'primary' : 'default'}}" bindtap="joinGrouping" data-item-index="{{index}}" loading="{{loading}}" plain="{{plain}}" disabled="{{isEnd[index] ? false : true}}">{{isEnd[index] ? '参与组班' : '等待组班成功...'}}</button>
 
-<button size="mini" type="primary" wx:if="{{item.startime && countoneday[index] <= 0}}" bindtap="quitGrouping" data-item-index="{{index}}">退组</button>
+<button size="mini" type="primary" wx:if="{{item.startime > 0 && countoneday[index] <= 0}}" bindtap="quitGrouping" data-item-index="{{index}}">退组</button>
             </view>
             <wxc-countdown wx:if="{{item.startime}}" countdown="{{icountdown[index]}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" data-item-index="{{index}}" data-item-startime="{{item.startime}}" bind:runcount="onRunCount" bind:endcount="onEndCount"></wxc-countdown>   
     <view class="demo-text">

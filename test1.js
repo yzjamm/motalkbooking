@@ -88,9 +88,10 @@ getGroupingList (event){
       if (res.errno === 0) {
         console.log(res.data);
     groupings= res.data.groupingList;
+    console.log(groupings);
     for (let i = 0; i < groupings.length; i++) {
-    isEnd[i]=(groupings[i].startime ? 0 : 1);
-    icountdown[i]=(groupings[i].startime ? 7*86400+groupings[i].startime-now : 0);
+    icountdown[i]=(groupings[i].startime ? 20+groupings[i].startime-now : 0);
+    isEnd[i]=(icountdown[i] > 0 ? 0 : 1);
     //if (groupings[i].startime === 0) {
     //countoneday[i]=0;
     //} else {
@@ -219,6 +220,7 @@ quitGrouping: function (event) {
       },
   });  
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -327,16 +329,35 @@ quitGrouping: function (event) {
     });
   },
   onEndCount(e) {
+    let that=this;
     let detail = e.detail;
     let itemIndex = e.target.dataset.itemIndex;
-    this.data.isEnd[itemIndex]=1;
-    this.data.countoneday[itemIndex]=0;
-    this.data.isonedayEnd[itemIndex]=true;
-    this.setData({
-      isEnd: this.data.isEnd,
-      countoneday: this.data.countoneday,
-      isonedayEnd: this.data.isonedayEnd,
-    })
+    let userInfo = this.data.userInfo;
+    let token = wx.getStorageSync('token');
+    console.log('reset grouping is here ');
+
+
+    that.data.isEnd[itemIndex]=1;
+    that.data.countoneday[itemIndex]=0;
+    that.data.isonedayEnd[itemIndex]=true;
+    that.data.icountdown[itemIndex]=0;
+
+        util.request(api.ResetGrouping, {
+      groupingId: that.data.groupings[itemIndex].groupingid
+    },'POST').then(function (res) {
+      
+    that.getGroupingList();
+    that.setData({
+      current: 1,
+      groupings: that.data.groupings,
+      isEnd: that.data.isEnd,
+      countoneday: that.data.countoneday,
+      isonedayEnd: that.data.isonedayEnd,
+      icountdown: that.data.icountdown
+    });
+      
+    }); 
+  
   },
   countAgain() {
     if (this.data.isEnd) {

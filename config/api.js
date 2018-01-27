@@ -62,4 +62,5 @@ module.exports = {
     GroupingList: NewApiRootUrl + 'groupings/list',
     JoinGrouping: NewApiRootUrl + 'groupings/join',
     QuitGrouping: NewApiRootUrl + 'groupings/quit',
+    ResetGrouping: NewApiRootUrl + 'groupings/reset',
 };
