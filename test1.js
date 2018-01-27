@@ -33,15 +33,17 @@ Page({
     }],
     current: 2,
     now:0,
-    countdown: [],
-    computeTime: 5,
-    isEnd: false,
-    disabled: true,
+    isEnd: 1,
+    disabled: false,
+    countdays:7,
+    icountdown: 0,
+    countoneday:[],
+    isonedayEnd:[],
+    computeTime: 0,
     numStyle: 'width: 48rpx; font-size: 28rpx; color: #ffffff; background: #000; text-align: center; border-radius: 8rpx; padding: 5rpx 0;',
     symbolStyle: 'font-size: 28rpx; color: #000; padding: 0 12rpx;',
 
     //groupings: [{ groupingid: '001', weekday: '周三', starthour: '19:10', teachername: 'J老师', coursename: '历史的故事', classmates: '4', price: '115' }, { groupingid: '002', weekday: '周三', starthour: '19:10', teachername: 'J老师', coursename: '国家地理RE', classmates: '4', price: '150' }, { groupingid: '003', weekday: '周日', starthour: '18:00', teachername: 'E老师', coursename: 'G4加州科学', classmates: '4', price: '120' }, { groupingid: '004', weekday: '周五', starthour: '19:10', teachername: 'M老师', coursename: 'G3写作', classmates: '4', price: '175' }],
-    id: 0,             //进入页面时，默认选择第0个，如果不需要默认选中，注释掉就可以了  
     
     groupings: [],
 
@@ -73,22 +75,43 @@ Page({
   
   },
 
-getGroupingList(){
+getGroupingList (event){
     let that = this;
-    let computeTime= 5;
-    let isEnd= false;
-    let disabled= true;
+    let groupings = [];
+    let isEnd = [];
+    let countoneday = [];
+    let isonedayEnd = [];
+    let icountdown=[];
+    let computeTime=[];
+    let now=parseInt(new Date().getTime() / 1000);
     util.request(api.GroupingList).then(function (res) {
       if (res.errno === 0) {
         console.log(res.data);
-        that.setData({
-          groupings: res.data.groupingList
-
+    groupings= res.data.groupingList;
+    for (let i = 0; i < groupings.length; i++) {
+    isEnd[i]=(groupings[i].startime ? 0 : 1);
+    icountdown[i]=(groupings[i].startime ? 7*86400+groupings[i].startime-now : 0);
+    //if (groupings[i].startime === 0) {
+    //countoneday[i]=0;
+    //} else {
+    //countoneday[i]=(((120 + groupings[i].startime - parseInt(new Date().getTime() / 1000)) > 0) ? (120 + groupings[i].startime - parseInt(new Date().getTime() / 1000)) : 0);      
+    //}
+    //isonedayEnd[i] = (countoneday[i] ? 0 : 1);
+    //computeTime[i] = countoneday[i];
+  };
+          that.setData({
+    groupings: groupings,
+    isEnd: isEnd,
+    icountdown: icountdown,
+    //countoneday: countoneday,
+    //isonedayEnd: isonedayEnd,
+    //computeTime: computeTime
         });
-        
+
       }
     });
   },
+
 
 joinGrouping: function (event) {
     let that = this;
@@ -99,8 +122,9 @@ joinGrouping: function (event) {
     let userInfo = this.data.userInfo;
     let token = wx.getStorageSync('token');
     let current = this.data.current;
-    let countdown= 5;
-    let computeTime= 5;
+    let countoneday=this.data.countoneday;
+    let isonedayEnd=this.data.isonedayEnd;
+    let icountdown= 5;
     console.log('index is '+index);
     console.log('itemindex is '+itemIndex);
     if (!token){
@@ -131,11 +155,6 @@ joinGrouping: function (event) {
     },'POST').then(function (res) {
       
     that.getGroupingList();
-    that.setData({
-      current: current + 1,
-      groupings: that.data.groupings
-    });
-        that.countAgain();
       
     }); 
      } 
@@ -146,6 +165,60 @@ joinGrouping: function (event) {
   });  
   },
 
+quitGrouping: function (event) {
+    let that = this;
+    let index = this.data.groupings.map(function (element, index, array) {
+        return index;
+      });
+    let itemIndex = event.target.dataset.itemIndex;
+    let userInfo = this.data.userInfo;
+    let token = wx.getStorageSync('token');
+    let current = this.data.current;
+    let icountdown= 5;
+    console.log('index is '+index);
+    console.log('itemindex is '+itemIndex);
+    if (!token){
+    user.loginByWeixin().then(res => {
+      this.setData({
+        userInfo: res.data.userInfo
+      });
+      console.log('userInfo is here......' + userInfo);
+      app.globalData.userInfo = res.data.userInfo;
+      app.globalData.token = res.data.token;
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
+  wx.showModal({
+    title: '退组确认',
+    content: '退组后，可随时重新参加组班',
+    showCancel: true,
+    cancelText: '取消',
+    cancelColor: '',
+    confirmText: '退组',
+    confirmColor: '',
+    success: function (res) {
+        if (res.confirm) {
+    util.request(api.QuitGrouping, {
+      groupingId: that.data.groupings[itemIndex].groupingid
+    },'POST').then(function (res) {
+      
+    that.getGroupingList();
+    that.setData({
+      current: current - 1,
+      groupings: that.data.groupings,
+      now: parseInt(new Date().getTime() / 1000)
+    });
+      
+    }); 
+     } 
+   },
+    fail: function (res) { },
+    complete: function (res) {
+      },
+  });  
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -244,22 +317,31 @@ joinGrouping: function (event) {
 
   },
   onRunCount(e) {
-    let detail = e.detail
-    this.setData({
-      computeTime: detail.computeTime
-    })
+    let that=this;
+    let itemIndex = e.target.dataset.itemIndex;
+    that.data.countoneday[itemIndex]=(10+that.data.groupings[itemIndex].startime-parseInt(new Date().getTime() / 1000)) > 0 ? (10+that.data.groupings[itemIndex].startime-parseInt(new Date().getTime() / 1000)) : 0;
+    that.data.isonedayEnd[itemIndex]=that.data.countoneday[itemIndex] ? false : true;
+    that.setData({
+      countoneday: that.data.countoneday,
+      isonedayEnd: that.data.isonedayEnd
+    });
   },
-  onEndCount() {
+  onEndCount(e) {
+    let detail = e.detail;
+    let itemIndex = e.target.dataset.itemIndex;
+    this.data.isEnd[itemIndex]=1;
+    this.data.countoneday[itemIndex]=0;
+    this.data.isonedayEnd[itemIndex]=true;
     this.setData({
-      isEnd: true,
-      disabled: false
+      isEnd: this.data.isEnd,
+      countoneday: this.data.countoneday,
+      isonedayEnd: this.data.isonedayEnd,
     })
   },
   countAgain() {
-    let countdown = this.data.countdown + 1
     if (this.data.isEnd) {
       this.setData({
-        countdown: countdown,
+        icountdown: icountdown,
         isEnd: false,
         disabled:true
       })
